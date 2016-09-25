@@ -1,4 +1,4 @@
-// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
+﻿// ННГУ, ВМК, Курс "Методы программирования-2", С++, ООП
 //
 // tbitfield.cpp - Copyright (c) Гергель В.П. 07.05.2001
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (19.04.2015)
@@ -9,10 +9,14 @@
 
 TBitField::TBitField(int len)
 {
+<<<<<<< HEAD
 	MemLen = (len + sizeof(int)*8-1)/(sizeof(int)*8);
 	pMem = new TELEM (MemLen);
 	for (int i = 0; i < MemLen; i++)
 			pMem[i] = 0;
+=======
+	//реализация
+>>>>>>> 5c5760b0399622120ad41769d09286e273ea5c71
 }
 
 TBitField::TBitField(const TBitField &bf) // конструктор копирования
