@@ -77,11 +77,13 @@ TSet TSet::operator+(const TSet &s) // объединение
 TSet TSet::operator+(const int Elem) // объединение с элементом
 {
 	BitField.SetBit(Elem);
+	return *this;
 }
 
 TSet TSet::operator-(const int Elem) // разность с элементом
 {
 	BitField.ClrBit(Elem);
+	return *this;
 }
 
 TSet TSet::operator*(const TSet &s) // пересечение
