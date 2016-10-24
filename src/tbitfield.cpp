@@ -3,7 +3,7 @@
 // tbitfield.cpp - Copyright (c) Гергель В.П. 07.05.2001
 //   Переработано для Microsoft Visual Studio 2008 Сысоевым А.В. (19.04.2015)
 //
-// Битовое поле
+// Битовое поле(Важно)
 
 #include "tbitfield.h"
 
@@ -61,13 +61,15 @@ void TBitField::SetBit(const int n) // установить бит
 
 void TBitField::ClrBit(const int n) // очистить бит
 {
-	if ( (n > -1) && (n < BitLen) )
+	if (n < 0) throw -1;
+	if (n >= BitLen) throw - 1;
 		pMem[GetMemIndex(n)] &= ~GetMemMask(n);
 }
 
 int TBitField::GetBit(const int n) const // получить значение бита
 {
-	if ( (n > -1) && (n < BitLen) )
+	if (n < 0) throw -1;
+	if (n >= BitLen) throw - 1;
 		return pMem[GetMemIndex(n)] & GetMemMask(n);
 	return 0;
 }
@@ -107,15 +109,18 @@ int TBitField::operator==(const TBitField &bf) const // сравнение
 
 int TBitField::operator!=(const TBitField &bf) const // сравнение
 {
-	int res = 1;
-	if (BitLen==bf.BitLen)
-		res = 0;
+	int res = 0;
+	if (BitLen!=bf.BitLen)
+	{
+		res = 1;
+		return res;
+	}
 	else
 		for (int i = 0; i < MemLen; i++)
 		{
-			if (pMem[i] == bf.pMem[i])
+			if (pMem[i] != bf.pMem[i])
 			{
-				res=0;
+				res = 1;
 				break;
 			}
 		}
@@ -144,10 +149,14 @@ TBitField TBitField::operator&(const TBitField &bf) // операция "и"
 
 TBitField TBitField::operator~(void) // отрицание
 {
-	int len = BitLen;
-	TBitField temp(len);
-	for (int i = 0; i < MemLen; i++)
-		temp.pMem[i] = ~pMem[i];
+	TBitField temp = (*this);
+	for (int i = 0; i < BitLen; i++)
+	{
+		if (temp.GetBit (i))
+			temp.ClrBit (i);
+		else
+			temp.SetBit (i);
+	}		
 	return temp;
 }
 
